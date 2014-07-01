@@ -4,11 +4,11 @@ Raspberry Pi synth Raspberry Pi synth. Nowhere near complete.
 
 ## References and Inspiration
 
-1. [Cap1188 Breakout Documentation|https://learn.adafruit.com/adafruit-cap1188-breakout/pinouts] *adafruit.com*
-2. [Configuring i2c on the Raspberry Pi|https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c] *adafruit.com*
-3. [Cap Touch on the RasPi|https://learn.adafruit.com/capacitive-touch-sensors-on-the-raspberry-pi/wiring] *adafruit.com*
-4. [Raspberry Pi and Arduino Connected Using I2C|http://blog.oscarliang.net/raspberry-pi-arduino-connected-i2c/] *oscarliang.net*
-5. [Adafruit CAP1188 Arduino Library|https://github.com/adafruit/Adafruit_CAP1188_Library/] *adafruit.com*
+1. [Cap1188 Breakout Documentation](https://learn.adafruit.com/adafruit-cap1188-breakout/pinouts) *adafruit.com*
+2. [Configuring i2c on the Raspberry Pi](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c) *adafruit.com*
+3. [Cap Touch on the RasPi](https://learn.adafruit.com/capacitive-touch-sensors-on-the-raspberry-pi/wiring) *adafruit.com*
+4. [Raspberry Pi and Arduino Connected Using I2C](http://blog.oscarliang.net/raspberry-pi-arduino-connected-i2c/) *oscarliang.net*
+5. [Adafruit CAP1188 Arduino Library](https://github.com/adafruit/Adafruit_CAP1188_Library/) *adafruit.com*
 
 ## BOM
 
