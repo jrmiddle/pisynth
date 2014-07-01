@@ -1,6 +1,6 @@
 # Pi Synth
 
-Raspberry Pi synth Raspberry Pi synth. Nowhere near complete.
+Raspberry Pi synth based on the Adafruit CAP1188 8-pad capacitive touch sensor, and other things. Nowhere near complete.
 
 ## References and Inspiration
 
