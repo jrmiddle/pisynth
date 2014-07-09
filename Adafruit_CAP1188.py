@@ -32,10 +32,10 @@ class Adafruit_CAP1188(object):
 
 
     # Sensor gain is encoded in 7-6 (bitwise "big endian")
-    MAIN_SENSGAIN1 =  0x01 << 6  # sensor gain 1
-    MAIN_SENSGAIN2 =  0x02 << 6  # sensor gain 2
-    MAIN_SENSGAIN4 =  0x04 << 6  # sensor gain 4
-    MAIN_SENSGAIN8 =  0x08 << 6  # sensor gain 8
+    MAIN_SENSGAIN1 =  0x00       # sensor gain 1
+    MAIN_SENSGAIN2 =  0x01 << 6  # sensor gain 2
+    MAIN_SENSGAIN4 =  0x02 << 6  # sensor gain 4
+    MAIN_SENSGAIN8 =  0x03 << 6  # sensor gain 8
 
     SENINPUTSTATUS =  0x03
     MTBLK          =  0x2A
