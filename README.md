@@ -1,6 +1,16 @@
 # Pi Synth
 
-Raspberry Pi synth based on the Adafruit CAP1188 8-pad capacitive touch sensor, and other things. Nowhere near complete.
+Raspberry Pi synth based on the Adafruit CAP1188 8-pad capacitive touch sensor, and other things.
+
+## Status
+
+This is first and foremost a playground/hobby-horse, and as such will likely never be complete. As components resolve and stabilize, they'll be split out into separate repos as necessary.
+
+Ergo, at the moment this is probably mostly useful as an example and resource roundup.
+
+## License
+
+BSD.
 
 ## References and Inspiration
 
@@ -161,7 +171,3 @@ pi@pi ~ $ sudo i2cdetect -y 1
  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
  70: -- -- -- -- -- -- -- --                         
 ```
-
-## License
-
-BSD.
