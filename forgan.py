@@ -93,7 +93,6 @@ if __name__ == "__main__":
     cap2.repeat_enabled_status = Adafruit_CAP1188.REPEAT_ENABLE_NONE
 
     logging.debug("Resetting interrupts.")
-    # Make sure we 
     cap1.reset_interrupt();
     cap2.reset_interrupt();
 

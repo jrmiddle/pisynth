@@ -171,3 +171,66 @@ pi@pi ~ $ sudo i2cdetect -y 1
  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
  70: -- -- -- -- -- -- -- --                         
 ```
+
+## Log
+
+### 7/13/2014 Interrupt Stickiness
+
+#### Symptom
+
+Since moving to interrupt-driven input, there's been a problem where interrupts would not be
+recognized until some random and unacceptable delay after start from a power-on or reset. However,
+it reliably worked if I restarted from a previously-running state (after interrupts started being
+recognized).
+
+#### Diagnosis
+
+1. Ran the `pintest` tool from the [Wiring Pi](http://www.wiringpi.com) kit, and verified that all
+of the GPIO input pins were functioning correctly.
+
+2. Tested the RPi's pull-up resistor on the GPIO used for interrupts by measuring potential across
+the pin and GND when pulled up. 3.3v, check.
+
+3. Removed all non-essential wiring on the IRQ path, leaving only one CAP1188 IRQ pin connected.
+No change in behavior.
+
+4. Placed the multimeter leads in series between the IRQ pin on the active CAP1188 and the interrupt GPIO.
+Expected results were that upon startup, the voltage would float around a few millivolts, and then shoot
+up to 3.3v once an interrupt was detected. Instead, it immediately went to 3.3v on startup.
+
+What was happening is that on startup, the CAP1188's INT flag on register MAIN is set to 1, meaning
+that an interrupt is being asserted. This happened whether starting from power-up, or after asserting
+the RESET pin. It was unexpected, since according to the datasheet, the default value of the Main
+Control Register (address `0x00`) is `0x00` (Datasheet section 5.1). 
+
+According to the Datasheet 4.2, driving the RESET pin low after previously driving it high will cause
+an interrupt to be generated
+
+So, the interrupt was being asserted before I started listening, so I was never seeing a rising
+edge once I started listening (except, apparently, for noise—eventually, after some period of time
+I'd see something and clear the interrupt).
+
+The resolution was to reset the interrupts by clearing the MAIN_INT flag after driving the RESET pin
+low.
+
+```python
+    # set MAIN_INT flag to 0
+    logging.debug("Resetting interrupts.")
+    cap1.reset_interrupt();
+    cap2.reset_interrupt();
+```
+
+After making this change, interrupts are detected immediately after start.
+
+Going back to the contributed Adafruit example interrupt code for the CAP1188, I noticed the line:
+
+```cpp
+    EIFR = 1;
+```
+
+I ignored it, sicne I hadn't heard of `EIFR` (however since I also didn't see it in the Adafruit library or
+the contributed code, I should have been suspicous).  As it turns out, this is the Arduino External Interrupt
+Flag Register. [This forum post](http://forum.arduino.cc/index.php?topic=42394.0;wap2) shed some light: `EIFR = 1;`
+is very important to making the Arduino code work properly; setting `MAIN_INT` to low accomplishes basically
+the same thing in the case of the Pi.
+
