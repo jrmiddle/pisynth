@@ -210,6 +210,8 @@ So, the interrupt was being asserted before I started listening, so I was never 
 edge once I started listening (except, apparently, for noise—eventually, after some period of time
 I'd see something and clear the interrupt).
 
+#### Resolution
+
 The resolution was to reset the interrupts by clearing the MAIN_INT flag after driving the RESET pin
 low.
 
@@ -222,13 +224,15 @@ low.
 
 After making this change, interrupts are detected immediately after start.
 
+#### Followup
+
 Going back to the contributed Adafruit example interrupt code for the CAP1188, I noticed the line:
 
 ```cpp
     EIFR = 1;
 ```
 
-I ignored it, sicne I hadn't heard of `EIFR` (however since I also didn't see it in the Adafruit library or
+I ignored it, since I hadn't heard of `EIFR` (however since I also didn't see it in the Adafruit library or
 the contributed code, I should have been suspicous).  As it turns out, this is the Arduino External Interrupt
 Flag Register. [This forum post](http://forum.arduino.cc/index.php?topic=42394.0;wap2) shed some light: `EIFR = 1;`
 is very important to making the Arduino code work properly; setting `MAIN_INT` to low accomplishes basically
