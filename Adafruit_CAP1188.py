@@ -2,6 +2,7 @@
 
 import smbus
 import time
+import logging
 
 
 class I2CInfo(object):
@@ -24,7 +25,7 @@ class Adafruit_CAP1188(object):
     Adafruit's Arduino library at https://github.com/adafruit/Adafruit_CAP1188_Library/.
     """
 
-    # Main Control Register
+    # Main Control Register (Datasheet 5.1)
     MAIN           =  0x00  # addr
     MAIN_INT       =  0x01 << 0  # interrupt asserted
     MAIN_DSLEEP    =  0x01 << 4  # deep sleep enabled
@@ -152,11 +153,13 @@ class Adafruit_CAP1188(object):
         See datasheet section 5.1.
         """
 
+        logging.debug("Will reset interrupt. MAIN: %s", bin(self.read_register(Adafruit_CAP1188.MAIN)))
         self.write_register(
             Adafruit_CAP1188.MAIN,
             self.read_register(Adafruit_CAP1188.MAIN)
                 & ~Adafruit_CAP1188.MAIN_INT
         )
+        logging.debug("Did reset interupt. MAIN is  %s", bin(self.read_register(Adafruit_CAP1188.MAIN)))
         
     @property
     def driver_name(self):
@@ -216,7 +219,7 @@ class Adafruit_CAP1188(object):
             value & Adafruit_CAP1188.CFG2_ENABLE_ALL
         )
 
-    def calibrate(self, pins = Adafruit_CAP1188.CAL_ACT_ALL):
+    def calibrate(self, pins = CAL_ACT_ALL):
 
         """
         Activate calibration for the given pins. Duration is 600ms.
@@ -224,7 +227,7 @@ class Adafruit_CAP1188(object):
         """
 
         self.write_register(
-            Adafruit_CAPP1188.CAL_ACT_REG,
+            Adafruit_CAP1188.CAL_ACT_REG,
             pins & Adafruit_CAP1188.CAL_ACT_ALL
         )
 
@@ -283,10 +286,9 @@ class Adafruit_CAP1188(object):
         """
 
         touchval = self.read_register(Adafruit_CAP1188.SENINPUTSTATUS)
-        ret = [i + self._touch_offset for i in range(0, 8) if touchval & 1<<i]
-        if len(ret) > 0:
+        if touchval > 0:
             self.reset_interrupt()
-        return ret
+        return (i + self._touch_offset for i in range(0, 8) if touchval & 1<<i)
 
 if __name__ == "__main__":
 
