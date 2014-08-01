@@ -79,7 +79,7 @@ $ sudo apt-get install i2c-tools python-smbus
 ##### Check
 
 With nothing on the i2c bus, there should be no addresses taken. *Note:
-I have no idea what the "UU" in b30 is about.*
+The "UU" at 3b is due to a [kernel audio driver using this address][rpi-wolfson], unrelated to this project.*
 
 ```bash
 $ i2cdetect -y 1
@@ -93,6 +93,8 @@ $ i2cdetect -y 1
  60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
  70: -- -- -- -- -- -- -- --                         
 ```
+
+[rpi-wolfson]: http://www.raspberrypi.org/forums/viewtopic.php?f=44&t=81750  "I2C Driver on Address 0x3b on Bus 1"
 
 #### GPIO Support
 
