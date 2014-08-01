@@ -99,7 +99,7 @@ $ i2cdetect -y 1
 The `forgan.py` script uses RPIO to access the Pi's GPIO pins. 
 
 ```bash
-$ sudo apt-get install rpio
+$ sudo pip install rpio
 ```
 
 I also recommend installing [@drogon's](https://twitter.com/drogon) excellent
